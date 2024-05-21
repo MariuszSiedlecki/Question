@@ -1,0 +1,4 @@
+-nowy projekt maven
+-IdeasApplication w odpowiednim pakiecie
+-Klasy - model - Category, Question, Answer
+-pseudokod głównej logiki
