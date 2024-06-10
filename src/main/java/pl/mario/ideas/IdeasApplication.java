@@ -58,7 +58,7 @@ public class IdeasApplication {
             }
             catch (Exception e) {
                 e.printStackTrace();
-                LOG.log(Level.SEVERE, "Unknown error ", e);
+                LOG.log(Level.SEVERE, "Uggggggggnknown error ", e);
             }
 
         }
