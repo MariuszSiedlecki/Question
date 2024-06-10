@@ -22,7 +22,7 @@ public class IdeasApplication {
     private void start() {
 
         LOG.info("Start.app..");
-        System.out.println("klops");
+
 
         boolean applicationLoop = true;
 
