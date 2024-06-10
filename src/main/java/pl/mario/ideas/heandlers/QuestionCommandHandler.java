@@ -7,6 +7,7 @@ import pl.mario.ideas.model.Category;
 import pl.mario.ideas.model.Question;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 public class QuestionCommandHandler extends BaseCommandHandler {
@@ -26,6 +27,7 @@ public class QuestionCommandHandler extends BaseCommandHandler {
     protected String getCommandName() {
         return COMMAND_NAME;
     }
+
 
     @Override
     public void handle(UserInputCommand command) {
