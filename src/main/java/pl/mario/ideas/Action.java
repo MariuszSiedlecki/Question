@@ -15,7 +15,7 @@ public enum Action {
     private final String value;
 
     public static Action of(String action) {
-        System.out.println("trying to find action: " + action);
+        System.out.println("Trying to find action: " + action);
         return Arrays.stream(values())
                 .filter(a -> a.name().equalsIgnoreCase(action))
                 .findFirst()

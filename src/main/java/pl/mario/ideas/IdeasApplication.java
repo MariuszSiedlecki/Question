@@ -1,6 +1,5 @@
 package pl.mario.ideas;
 
-import pl.mario.ideas.heandlers.AnswerCommandHandler;
 import pl.mario.ideas.heandlers.*;
 import pl.mario.ideas.input.UserInputCommand;
 import pl.mario.ideas.input.UserInputManager;
@@ -15,6 +14,7 @@ import java.util.logging.Logger;
 public class IdeasApplication {
 
     private static Logger LOG = Logger.getLogger(IdeasApplication.class.getName());
+
     public static void main(String[] args) {
         new IdeasApplication().start();
     }
@@ -50,18 +50,15 @@ public class IdeasApplication {
                         .orElseThrow(() -> new IllegalArgumentException("Unknown handler: " + userInputCommand.getCommand()))
                         .handle(userInputCommand);
             } catch (QuiteIdeaApplicationException e) {
-               LOG.info("Quite...");
+                LOG.info("Quite...");
                 applicationLoop = false;
 
             } catch (IllegalArgumentException e) {
                 LOG.log(Level.WARNING, "Validation Exception " + e.getMessage());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 LOG.log(Level.SEVERE, "Unknown error ", e);
             }
-
         }
-
     }
 }
