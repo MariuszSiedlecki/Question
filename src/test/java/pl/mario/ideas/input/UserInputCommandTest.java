@@ -1,7 +1,7 @@
 package pl.mario.ideas.input;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pl.mario.ideas.Action;
 
 import java.util.List;
 
@@ -18,30 +18,30 @@ class UserInputCommandTest {
         UserInputCommand userInputCommand = new UserInputCommand(input);
         //Then
         assertEquals("category", userInputCommand.getCommand());
-        assertEquals("add", userInputCommand.getAction());
+        assertEquals(Action.ADD, userInputCommand.getAction());
         assertLinesMatch(List.of("CategoryName"), userInputCommand.getParam());
     }
 
     @Test
     void shouldBuildCorrectUserInputCommandWithMultiplesParam() {
         //given
-        String input = "command action param1 param2 param3";
-        //When
+        String input = "category add CategoryName1 CategoryName2";
+        // when
         UserInputCommand userInputCommand = new UserInputCommand(input);
-        //Then
-        assertEquals("command", userInputCommand.getCommand());
-        assertEquals("action", userInputCommand.getAction());
-        assertLinesMatch(List.of("param1", "param2", "param3"), userInputCommand.getParam());
+        // then
+        assertEquals("category", userInputCommand.getCommand());
+        assertEquals(Action.ADD, userInputCommand.getAction());
+        assertEquals(List.of("CategoryName1", "CategoryName2"), userInputCommand.getParam());
     }
     @Test
     void shouldBuildCorrectUserInputCommandWithoutParam() {
         //given
-        String input = "command action";
+        String input = "command add";
         //When
         UserInputCommand userInputCommand = new UserInputCommand(input);
         //Then
         assertEquals("command", userInputCommand.getCommand());
-        assertEquals("action", userInputCommand.getAction());
+        assertEquals(Action.ADD, userInputCommand.getAction());
         assertEquals(0, userInputCommand.getParam().size());
     }
 }
