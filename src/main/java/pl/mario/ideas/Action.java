@@ -14,10 +14,11 @@ public enum Action {
 
     private final String value;
 
-    public static Action of(String inputValue) {
+    public static Action of(String action) {
+        System.out.println("trying to find action: " + action);
         return Arrays.stream(values())
-                .filter(action -> Objects.equals(action.value, inputValue))
+                .filter(a -> a.name().equalsIgnoreCase(action))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Unknow actions " + inputValue));
+                .orElseThrow(() -> new IllegalArgumentException("Unknown action: " + action));
     }
 }
