@@ -1,7 +1,6 @@
 package pl.mario.ideas;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public enum Action {
     LIST("list"),

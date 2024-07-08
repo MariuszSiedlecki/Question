@@ -7,14 +7,13 @@ import pl.mario.ideas.model.Category;
 import pl.mario.ideas.model.Question;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 public class QuestionCommandHandler extends BaseCommandHandler {
-    private static Logger LOG = Logger.getLogger(QuitCommandHandler.class.getName());
+    private static final Logger LOG = Logger.getLogger(QuitCommandHandler.class.getName());
     private static final String COMMAND_NAME = "question";
-    private QuestionDao questionDao;
-    private CategoryDao categoryDao;
+    private final QuestionDao questionDao;
+    private final CategoryDao categoryDao;
 
 
     public QuestionCommandHandler() {
@@ -35,27 +34,26 @@ public class QuestionCommandHandler extends BaseCommandHandler {
             throw new IllegalArgumentException("command can't be null");
         }
         switch (command.getAction()) {
-            case LIST:
+            case LIST -> {
                 LOG.info("list of questions...");
                 if (!command.getParam().isEmpty()) {
                     throw new IllegalArgumentException("question list doesn't support any additional params");
                 }
                 List<Question> questions = questionDao.findAll();
                 questions.forEach(System.out::println);
-                break;
-            case ADD:
+            }
+            case ADD -> {
                 LOG.info("Add question");
                 if (command.getParam().size() != 2) {
                     throw new IllegalArgumentException("wrong command format. Check help for mor information");
                 }
                 String categoryName = command.getParam().get(0);
                 String questionName = command.getParam().get(1);
-
                 Category category = categoryDao.findOne(categoryName)
                         .orElseThrow(() -> new IllegalArgumentException("Category not found" + categoryName));
                 questionDao.add(new Question(questionName, category));
-                break;
-            default: {
+            }
+            default -> {
                 throw new IllegalArgumentException(String.format("Unknown action: %s from command %s",
                         command.getAction(), command.getCommand()));
             }
