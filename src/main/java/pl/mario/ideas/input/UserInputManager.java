@@ -1,13 +1,18 @@
 package pl.mario.ideas.input;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class UserInputManager {
 
     private Scanner scanner;
 
+    public UserInputManager(InputStream inputStream) {
+        scanner = new Scanner(inputStream);
+    }
+
     public UserInputManager() {
-        scanner = new Scanner(System.in);
+        this(System.in);
     }
 
     public UserInputCommand nextCommand() {
