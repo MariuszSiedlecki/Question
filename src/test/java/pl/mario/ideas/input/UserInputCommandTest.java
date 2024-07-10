@@ -5,15 +5,14 @@ import pl.mario.ideas.Action;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertLinesMatch;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserInputCommandTest {
 
     @Test
     void shouldBuildCorrectUserInputCommand() {
         //given
-         String input = "category add CategoryName";
+        String input = "category add CategoryName";
         //When
         UserInputCommand userInputCommand = new UserInputCommand(input);
         //Then
@@ -33,6 +32,7 @@ class UserInputCommandTest {
         assertEquals(Action.ADD, userInputCommand.getAction());
         assertEquals(List.of("CategoryName1", "CategoryName2"), userInputCommand.getParam());
     }
+
     @Test
     void shouldBuildCorrectUserInputCommandWithoutParam() {
         //given
@@ -43,5 +43,13 @@ class UserInputCommandTest {
         assertEquals("command", userInputCommand.getCommand());
         assertEquals(Action.ADD, userInputCommand.getAction());
         assertEquals(0, userInputCommand.getParam().size());
+    }
+
+    @Test
+    void shouldThrowExceptionForUnknownAction() {
+        //given
+        String input = "command unknown";
+        //when & then
+        assertThrows(IllegalArgumentException.class, () -> new UserInputCommand(input));
     }
 }

@@ -16,7 +16,7 @@ public enum Action {
     public static Action of(String action) {
         System.out.println("Trying to find action: " + action);
         return Arrays.stream(values())
-                .filter(a -> a.name().equalsIgnoreCase(action))
+                .filter(a -> a.value.equalsIgnoreCase(action))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unknown action: " + action));
     }
