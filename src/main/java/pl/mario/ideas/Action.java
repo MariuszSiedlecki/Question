@@ -4,8 +4,9 @@ import java.util.Arrays;
 
 public enum Action {
     LIST("list"),
-    ADD("add");
-
+    ADD("add"),
+    REMOVE("remove"),
+    UPDATE("update");
 
     Action(String value) {
         this.value = value;

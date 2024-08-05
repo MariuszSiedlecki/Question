@@ -18,7 +18,6 @@ public class CategoryCommandHandler extends BaseCommandHandler {
         categoryDao = new CategoryDao();
     }
 
-
     @Override
     protected String getCommandName() {
         return COMMAND_NAME;
@@ -35,15 +34,40 @@ public class CategoryCommandHandler extends BaseCommandHandler {
                 if (!command.getParam().isEmpty()) {
                     throw new IllegalArgumentException("category list doesn't support any additional params");
                 }
-                List<Category>categories = categoryDao.findAll();
+                List<Category> categories = categoryDao.findAll();
                 categories.forEach(System.out::println);
                 break;
             case ADD:
                 LOG.info("Add category");
                 if (command.getParam().size() != 1)
-                    throw  new IllegalArgumentException("wrong format. Check help for mor information");
+                    throw new IllegalArgumentException("wrong format. Check help for mor information");
                 String categoryName = command.getParam().get(0);
                 categoryDao.add(new Category(categoryName));
+                break;
+            case REMOVE:
+                LOG.info("Remove category");
+                if (command.getParam().size() != 1)
+                    throw new IllegalArgumentException("Wrong format. Check help for more information");
+                String removeCategoryName = command.getParam().get(0);
+                System.out.println("Category was removed: " + removeCategoryName);
+                categoryDao.remove(removeCategoryName);
+                break;
+            case UPDATE:
+                LOG.info("Update category");
+                if (command.getParam().size() != 2)
+                    throw new IllegalArgumentException("Wrong format. Check help for more information");
+
+                String oldCategoryName = command.getParam().get(0);
+                String newCategoryName = command.getParam().get(1);
+                LOG.info("Old category name: " + oldCategoryName);
+                LOG.info("New category name: " + newCategoryName);
+
+                Category category = categoryDao.findOne(oldCategoryName)
+                        .orElseThrow(() -> new IllegalArgumentException("Category not found:" + oldCategoryName));
+
+                category.setName(newCategoryName);
+                categoryDao.update(category, oldCategoryName);
+                System.out.println("Category was update:" + oldCategoryName + " to " + newCategoryName);
                 break;
             default: {
                 throw new IllegalArgumentException(String.format("Unknown action: %s from command %s",

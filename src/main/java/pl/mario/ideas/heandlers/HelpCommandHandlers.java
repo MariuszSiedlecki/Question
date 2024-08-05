@@ -10,7 +10,15 @@ public class HelpCommandHandlers extends BaseCommandHandler {
         System.out.println("Help...");
         System.out.println("Allowed command: help, quite, category, question, answer");
         System.out.println("Command pattern: <command> <action> <param1> <param2>");
-        System.out.println("Example: category add CategoryName" );
+        System.out.println("Example command:\n " +
+                "'category list',\n " +
+                "'category add + (name)',\n " +
+                "'category remove + (name)',\n " +
+                "'category update + (old category) + (new category) ',\n " +
+                "'question list',\n " +
+                "'question add + (category) + (question)',\n " +
+                "'question remove + (name)'\n " +
+                "'answer add + (questionName) + (answer)',\n ");
     }
 
     @Override

@@ -17,8 +17,13 @@ public class QuestionCommandHandler extends BaseCommandHandler {
 
 
     public QuestionCommandHandler() {
-        questionDao = new QuestionDao();
-        categoryDao = new CategoryDao();
+        this.questionDao = new QuestionDao();
+        this.categoryDao = new CategoryDao();
+    }
+
+    public QuestionCommandHandler(QuestionDao questionDao, CategoryDao categoryDao) {
+        this.questionDao = questionDao;
+        this.categoryDao = categoryDao;
     }
 
 
@@ -26,7 +31,6 @@ public class QuestionCommandHandler extends BaseCommandHandler {
     protected String getCommandName() {
         return COMMAND_NAME;
     }
-
 
     @Override
     public void handle(UserInputCommand command) {
@@ -52,6 +56,14 @@ public class QuestionCommandHandler extends BaseCommandHandler {
                 Category category = categoryDao.findOne(categoryName)
                         .orElseThrow(() -> new IllegalArgumentException("Category not found" + categoryName));
                 questionDao.add(new Question(questionName, category));
+            }
+            case REMOVE -> {
+                LOG.info("Remove question");
+                if (command.getParam().size() != 1) {
+                    throw new IllegalArgumentException("Wrong command format. Check help for more information");
+                }
+                String questionName = command.getParam().get(0);
+                questionDao.remove(questionName);
             }
             default -> {
                 throw new IllegalArgumentException(String.format("Unknown action: %s from command %s",

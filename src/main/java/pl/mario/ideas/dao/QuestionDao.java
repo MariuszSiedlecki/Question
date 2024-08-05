@@ -16,9 +16,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class QuestionDao {
-    private static Logger LOG = Logger.getLogger(QuestionDao.class.getName());
+    private static final Logger LOG = Logger.getLogger(QuestionDao.class.getName());
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public QuestionDao() {
         this.objectMapper = new ObjectMapper();
@@ -62,12 +62,23 @@ public class QuestionDao {
 
     public void addAnswer(Question question, Answer answer) {
         List<Question> questions = getQuestions();
-        for (Question q : questions) {
-            if (Objects.equals(q.getName(), question.getName())) {
-                q.getAnswers().add(answer);
-
+        for (int i = 0; i < questions.size(); i++) {
+            if (questions.get(i).getName().equals(question.getName())) {
+                questions.get(i).getAnswers().add(answer);
+                break;
             }
         }
+        try {
+            Files.writeString(Paths.get("./questions.txt"), objectMapper.writeValueAsString(questions));
+        } catch (IOException e) {
+            LOG.log(Level.WARNING, "Error writing questions file", e);
+        }
+    }
+
+    public void remove(String questionName) {
+        List<Question> questions = getQuestions();
+        questions.removeIf(q -> q.getName().equals(questionName));
         saveQuestion(questions);
+
     }
 }

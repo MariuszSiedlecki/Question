@@ -1,1 +1,1 @@
-[{"name":"Question1","category":{"name":"C1"},"answers":[{"name":"Answer1"},{"name":"Answer2"}]},{"name":"QuestionAKtoTo","category":{"name":"X2"},"answers":[]}]
+[{"name":"QuestionAKtoTo","category":{"name":"X2"},"answers":[]},{"name":"Question1","category":{"name":"M1"},"answers":[{"name":"odpowiedz1"}]},{"name":"addedQuestion","category":{"name":"C2"},"answers":[{"name":"Koło"}]},{"name":"Java","category":{"name":"K1"},"answers":[]}]

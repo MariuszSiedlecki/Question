@@ -14,15 +14,24 @@ public class ActionTest {
         Action result = Action.of(action);
         assertEquals(Action.LIST, result);
     }
+
     @Test
     public void testActionOfAdd() {
         String action = "add";
         Action result = Action.of(action);
         assertEquals(Action.ADD, result);
     }
+
     @Test
     public void testActionUnknown() {
         String action = "unknown";
         assertThrows(IllegalArgumentException.class, () -> Action.of(action));
+    }
+
+    @Test
+    public void testActionRemove() {
+        String action = "remove";
+        Action result = Action.of(action);
+        assertEquals(Action.REMOVE, result);
     }
 }

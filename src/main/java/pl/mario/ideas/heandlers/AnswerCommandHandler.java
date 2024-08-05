@@ -1,6 +1,6 @@
 package pl.mario.ideas.heandlers;
 
-import pl.mario.ideas.dao.CategoryDao;
+import pl.mario.ideas.dao.AnswerDao;
 import pl.mario.ideas.dao.QuestionDao;
 import pl.mario.ideas.input.UserInputCommand;
 import pl.mario.ideas.model.Answer;
@@ -11,15 +11,14 @@ import java.util.logging.Logger;
 public class AnswerCommandHandler extends BaseCommandHandler {
     private static Logger LOG = Logger.getLogger(AnswerCommandHandler.class.getName());
     private static final String COMMAND_NAME = "answer";
+    private final AnswerDao answerDao;
     private QuestionDao questionDao;
-    private CategoryDao categoryDao;
 
 
     public AnswerCommandHandler() {
-        questionDao = new QuestionDao();
-        categoryDao = new CategoryDao();
+        this.answerDao = new AnswerDao();
+        this.questionDao = new QuestionDao();
     }
-
 
     @Override
     protected String getCommandName() {
@@ -35,24 +34,24 @@ public class AnswerCommandHandler extends BaseCommandHandler {
             case LIST:
                 LOG.info("list of answer...");
                 if (command.getParam().size() != 1) {
-                    throw new IllegalArgumentException("question list doesn't support any additional params");
+                    throw new IllegalArgumentException("Answer list requires one parameter (question name)");
                 }
                 String questionName = command.getParam().get(0);
                 Question question = questionDao.findOne(questionName)
-                        .orElseThrow(() -> new IllegalArgumentException("Question not found" + questionName));
+                        .orElseThrow(() -> new IllegalArgumentException("Question not found: " + questionName));
                 displayQuestion(question);
                 break;
             case ADD:
                 LOG.info("Add answer");
                 if (command.getParam().size() != 2) {
-                    throw new IllegalArgumentException("wrong command format. Check help for mor information");
+                    throw new IllegalArgumentException("Wrong command format. Check help for mor information");
                 }
                 questionName = command.getParam().get(0);
                 String answerName = command.getParam().get(1);
                 question = questionDao.findOne(questionName)
                         .orElseThrow(() -> new IllegalArgumentException("Question not found" + questionName));
+                answerDao.add(new Answer(answerName));
                 questionDao.addAnswer(question, new Answer(answerName));
-
                 break;
             default: {
                 throw new IllegalArgumentException(String.format("Unknown action: %s from command %s",
@@ -64,6 +63,5 @@ public class AnswerCommandHandler extends BaseCommandHandler {
     private void displayQuestion(Question question) {
         System.out.println(question.getName());
         question.getAnswers().forEach(System.out::println);
-
     }
 }
