@@ -1,4 +1,14 @@
-.idea/
+### STS###
+.classpath
+.apt_generated
+.factorypath
+.project
+.sttings
+.springBeans
+.sts4-cache
+
+##
+.idea
 *.iws
 *.iml
 *.ipr
