@@ -1,6 +1,6 @@
 package pl.mario.ideas;
 
-import pl.mario.ideas.heandlers.*;
+import pl.mario.ideas.handlers.*;
 import pl.mario.ideas.input.UserInputCommand;
 import pl.mario.ideas.input.UserInputManager;
 

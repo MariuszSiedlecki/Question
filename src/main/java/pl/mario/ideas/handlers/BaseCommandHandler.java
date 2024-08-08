@@ -1,4 +1,4 @@
-package pl.mario.ideas.heandlers;
+package pl.mario.ideas.handlers;
  abstract class BaseCommandHandler implements CommandHandler {
 
     @Override

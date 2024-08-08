@@ -1,4 +1,4 @@
-package pl.mario.ideas.heandlers;
+package pl.mario.ideas.handlers;
 
 import pl.mario.ideas.dao.CategoryDao;
 import pl.mario.ideas.input.UserInputCommand;

@@ -1,4 +1,4 @@
-package pl.mario.ideas.heandlers;
+package pl.mario.ideas.handlers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
