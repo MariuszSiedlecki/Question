@@ -30,7 +30,7 @@ public class CategoryCommandHandler extends BaseCommandHandler {
         }
         switch (command.getAction()) {
             case LIST:
-                LOG.info("list of category");
+                LOG.info("List of category");
                 if (!command.getParam().isEmpty()) {
                     throw new IllegalArgumentException("category list doesn't support any additional params");
                 }
@@ -39,40 +39,57 @@ public class CategoryCommandHandler extends BaseCommandHandler {
                 break;
             case ADD:
                 LOG.info("Add category");
-                if (command.getParam().size() != 1)
-                    throw new IllegalArgumentException("wrong format. Check help for mor information");
-                String categoryName = command.getParam().get(0);
+                if (command.getParam().isEmpty())
+                    throw new IllegalArgumentException("category name is required");
+                String categoryName = String.join(" ", command.getParam());
                 categoryDao.add(new Category(categoryName));
                 break;
             case REMOVE:
                 LOG.info("Remove category");
-                if (command.getParam().size() != 1)
-                    throw new IllegalArgumentException("Wrong format. Check help for more information");
-                String removeCategoryName = command.getParam().get(0);
-                System.out.println("Category was removed: " + removeCategoryName);
+                if (command.getParam().isEmpty())
+                    throw new IllegalArgumentException("wrong format. Check help for more information");
+                String removeCategoryName = String.join(" ", command.getParam());
                 categoryDao.remove(removeCategoryName);
+                System.out.println("Category was removed: " + removeCategoryName);
                 break;
             case UPDATE:
                 LOG.info("Update category");
-                if (command.getParam().size() != 2)
-                    throw new IllegalArgumentException("Wrong format. Check help for more information");
+                if (command.getParam().size() < 2) {
+                    throw new IllegalArgumentException("Both old and new category names are required");
+                }
 
-                String oldCategoryName = command.getParam().get(0);
-                String newCategoryName = command.getParam().get(1);
+                String fullCommand = String.join(" ", command.getParam());
+                String[] parts = splitCommand(fullCommand);
+
+                if (parts.length != 2) {
+                    throw new IllegalArgumentException("Invalid format for category names");
+                }
+
+                String oldCategoryName = parts[0].trim();
+                String newCategoryName = parts[1].trim();
+
                 LOG.info("Old category name: " + oldCategoryName);
                 LOG.info("New category name: " + newCategoryName);
 
                 Category category = categoryDao.findOne(oldCategoryName)
-                        .orElseThrow(() -> new IllegalArgumentException("Category not found:" + oldCategoryName));
+                        .orElseThrow(() -> new IllegalArgumentException("Category not found: " + oldCategoryName));
 
                 category.setName(newCategoryName);
                 categoryDao.update(category, oldCategoryName);
-                System.out.println("Category was update:" + oldCategoryName + " to " + newCategoryName);
+                System.out.println("Category was updated: " + oldCategoryName + " to " + newCategoryName);
                 break;
-            default: {
+            default:
                 throw new IllegalArgumentException(String.format("Unknown action: %s from command %s",
                         command.getAction(), command.getCommand()));
-            }
         }
+    }
+
+    private String[] splitCommand(String command) {
+        command = command.trim().replaceAll("^\"|\"$", "");
+        String[] parts = command.split("\" \"");
+        if (parts.length == 1) {
+            parts = command.split("\"");
+        }
+        return parts;
     }
 }
