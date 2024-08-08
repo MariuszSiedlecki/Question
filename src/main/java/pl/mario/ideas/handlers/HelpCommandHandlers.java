@@ -14,7 +14,7 @@ public class HelpCommandHandlers extends BaseCommandHandler {
                 "'category list',\n " +
                 "'category add + (name)',\n " +
                 "'category remove + (name)',\n " +
-                "'category update (old category - quotation marks) + (new category - quotation marks) ',\n " +
+                "'category update (old category + quotation marks) + (new category + quotation marks) ',\n " +
                 "'question list',\n " +
                 "'question add + (category) + (question)',\n " +
                 "'question remove + (name)'\n " +

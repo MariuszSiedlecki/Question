@@ -1,1 +1,1 @@
-[{"name":"C2"},{"name":"categoryNameF1"},{"name":"K1"},{"name":"M1"},{"name":"B2bbb"},{"name":"costam"}]
+[{"name":"C2"},{"name":"Category F1"},{"name":"K1"},{"name":"Coś"},{"name":"B2bbb"},{"name":"test dodania"},{"name":"Zmian zmian zmian"}]
